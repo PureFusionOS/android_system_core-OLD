@@ -127,6 +127,7 @@ static void __initialize(void) {
         ta_cpuset_fd = open(filename, O_WRONLY | O_CLOEXEC);
 
 #ifdef USE_SCHEDBOOST
+        char* filename;
         filename = "/dev/stune/top-app/tasks";
         ta_schedboost_fd = open(filename, O_WRONLY | O_CLOEXEC);
         filename = "/dev/stune/foreground/tasks";
