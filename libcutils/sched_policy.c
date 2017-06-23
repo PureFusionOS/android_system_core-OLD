@@ -373,7 +373,11 @@ int set_sched_policy(int tid, SchedPolicy policy)
     }
 #endif
 
-    if (__sys_supports_schedgroups) {
+/* BEGIN Motorola, rknize2, 05/10/2013, IKJBXLINE-9555
+ * Schedule groups are not supported for RT processes. */
+    if (__sys_supports_schedgroups &&
+        policy != SP_REALTIME) {
+/* END Motorola, IKJBXLINE-9555 */
         int boost_fd = -1;
         switch (policy) {
         case SP_BACKGROUND:
