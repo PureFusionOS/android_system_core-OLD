@@ -88,7 +88,7 @@ static int add_tid_to_cgroup(int tid, int fd)
         *--ptr = '0' + (tid % 10);
         tid = tid / 10;
     }
-
+    SLOW("add_tid_to_cgroup: text = '%s'\n", text);
     if (write(fd, ptr, end - ptr) < 0) {
         /*
          * If the thread is in the process of exiting,
@@ -303,13 +303,14 @@ int set_cpuset_policy(int tid, SchedPolicy policy)
         boost_fd = fd = -1;
         break;
     }
-
+    SLOGW("Checkpoint 1: tid = %d, fd = %d\n", tid, fd);
     if (add_tid_to_cgroup(tid, fd) != 0) {
         if (errno != ESRCH && errno != ENOENT)
             return -errno;
     }
 
 #ifdef USE_SCHEDBOOST
+    SLOGW("Checkpoint 2: tid = %d, boost_fd = %d\n", tid, boost_fd);
     if (boost_fd > 0 && add_tid_to_cgroup(tid, boost_fd) != 0) {
         if (errno != ESRCH && errno != ENOENT)
             return -errno;
@@ -399,6 +400,7 @@ int set_sched_policy(int tid, SchedPolicy policy)
         }
 
 #ifdef USE_SCHEDBOOST
+        SLOGW("Checkpoint 3: tid = %d, boost_fd = %d\n", tid, boost_fd);
         if (boost_fd > 0 && add_tid_to_cgroup(tid, boost_fd) != 0) {
             if (errno != ESRCH && errno != ENOENT)
                 return -errno;
