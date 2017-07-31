@@ -43,7 +43,7 @@ static inline SchedPolicy _policy(SchedPolicy p)
 #include <sched.h>
 #include <sys/prctl.h>
 
-#define POLICY_DEBUG 0
+#define POLICY_DEBUG 1
 
 // This prctl is only available in Android kernels.
 #define PR_SET_TIMERSLACK_PID 41
