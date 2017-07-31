@@ -124,6 +124,7 @@ static void __initialize(void) {
         system_bg_cpuset_fd = open(filename, O_WRONLY | O_CLOEXEC);
         filename = "/dev/cpuset/top-app/tasks";
         ta_cpuset_fd = open(filename, O_WRONLY | O_CLOEXEC);
+        SLOGW("CPUSET: fg=%d, bg=%d, system_bg=%d, ta=%d\n", fg_cpuset_fd, bg_cpuset_fd, system_bg_cpuset_fd, ta_cpuset_fd);
 
 #ifdef USE_SCHEDBOOST
         filename = "/dev/stune/top-app/tasks";
@@ -132,6 +133,7 @@ static void __initialize(void) {
         fg_schedboost_fd = open(filename, O_WRONLY | O_CLOEXEC);
         filename = "/dev/stune/background/tasks";
         bg_schedboost_fd = open(filename, O_WRONLY | O_CLOEXEC);
+        SLOGW("STUNE: ta=%d, fg=%d, bg=%d\n", ta_schedboost_fd, fg_schedboost_fd, bg_schedboost_fd);
 #endif
     }
 #endif
